@@ -1,0 +1,324 @@
+/* Neon Coast Cover Studio — editor chrome.
+   Dark dusk theme with neon accents. The cover art itself is drawn on canvas
+   by src/cover.js; this file only styles the tool around it. */
+
+@font-face {
+  font-family: 'Anton';
+  src: url('fonts/Anton-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Pacifico';
+  src: url('fonts/Pacifico-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #0d0718;
+  --panel: #1a1030;
+  --panel-2: #241640;
+  --line: #3a2560;
+  --text: #f4efff;
+  --muted: #b9a8d8;
+  --accent: #ff2e88;
+  --accent-2: #00e5ff;
+  --gold: #ffd166;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.5 system-ui, -apple-system, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+/* -- top bar ----------------------------------------------------------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #1d0b3d, #4b0f66 55%, #0d3b4d);
+  border-bottom: 2px solid var(--accent);
+  flex-wrap: wrap;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff7e3d, #ff2e63);
+  color: #fff;
+  font-family: 'Anton', sans-serif;
+  font-size: 20px;
+  letter-spacing: 1px;
+  box-shadow: 0 0 18px rgba(255, 46, 99, 0.55);
+}
+
+.brand h1 {
+  margin: 0;
+  font-family: 'Anton', sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.brand p { margin: 0; color: var(--muted); font-size: 12.5px; }
+
+.top-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* -- buttons ------------------------------------------------------------ */
+
+button {
+  font: inherit;
+  color: var(--text);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+  cursor: pointer;
+}
+
+button:hover { border-color: var(--accent); }
+
+button:disabled { opacity: 0.4; cursor: default; }
+
+button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+button.primary {
+  width: 100%;
+  background: linear-gradient(90deg, #ff7e3d, #ff2e63);
+  border: none;
+  font-weight: 700;
+  padding: 11px 12px;
+  margin-top: 8px;
+}
+
+#exportAllBtn { width: 100%; margin-top: 8px; }
+
+/* -- workspace layout --------------------------------------------------- */
+
+.workspace {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px 20px 28px;
+  align-items: start;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.group {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.group h2 {
+  margin: 0 0 10px;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.note { color: var(--muted); font-size: 12.5px; margin: 6px 0; }
+
+.btn-row { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.btn-row button { flex: 1 1 auto; padding: 7px 8px; font-size: 13px; }
+
+.field {
+  display: block;
+  margin: 8px 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.field input[type="text"],
+.field select {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #120a24;
+  color: var(--text);
+  font: inherit;
+}
+
+.field input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+.check {
+  display: block;
+  margin: 6px 0;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+
+.check input { accent-color: var(--accent); margin-right: 6px; }
+
+/* -- photo library ------------------------------------------------------ */
+
+.photo-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.photo-thumb {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  position: relative;
+}
+
+.photo-thumb img {
+  display: block;
+  width: 100%;
+  height: 64px;
+  object-fit: cover;
+}
+
+.photo-thumb span {
+  display: block;
+  padding: 3px 6px;
+  font-size: 11.5px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upload-btn {
+  display: block;
+  text-align: center;
+  padding: 9px 12px;
+  border: 1px dashed var(--accent);
+  border-radius: 8px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.upload-btn:hover { background: rgba(255, 46, 136, 0.12); }
+
+/* -- grade swatches ----------------------------------------------------- */
+
+.swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: -1px;
+}
+
+.swatch.sunset { background: linear-gradient(135deg, #ff7e3d, #ff2e63); }
+.swatch.neon { background: linear-gradient(135deg, #ff2e88, #00e5ff); }
+.swatch.gold { background: linear-gradient(135deg, #e8a33d, #ffe9a8); }
+.swatch.noir { background: linear-gradient(135deg, #55555e, #0c0c0e); }
+.swatch.teal { background: linear-gradient(135deg, #00e5ff, #e4572e); }
+
+/* -- preview stage ------------------------------------------------------ */
+
+.stage-wrap {
+  position: sticky;
+  top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.stage-box {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 420px;
+  padding: 18px;
+  border-radius: 14px;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, rgba(255, 46, 99, 0.25), transparent 60%),
+    radial-gradient(900px 500px at 50% 110%, rgba(0, 229, 255, 0.18), transparent 60%),
+    #14092a;
+  border: 1px solid var(--line);
+}
+
+#stage {
+  max-width: 100%;
+  max-height: calc(100vh - 190px);
+  border-radius: 4px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+  cursor: grab;
+  touch-action: none;
+}
+
+#stage:active { cursor: grabbing; }
+
+.stage-caption { color: var(--muted); font-size: 13px; margin: 0; }
+
+.fineprint { color: var(--muted); font-size: 11.5px; margin: 4px 0 0; }
+
+/* -- screenshot mode: the cover alone, edge to edge --------------------- */
+
+body.shot-cover { background: #000; }
+
+body.shot-cover .topbar,
+body.shot-cover .controls,
+body.shot-cover .stage-caption { display: none; }
+
+body.shot-cover .workspace {
+  display: block;
+  padding: 0;
+}
+
+body.shot-cover .stage-wrap { position: static; }
+
+body.shot-cover .stage-box {
+  min-height: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: #000;
+}
+
+body.shot-cover #stage {
+  max-height: none;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: default;
+}
+
+/* -- narrow screens ----------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .workspace { grid-template-columns: 1fr; }
+  .stage-wrap { position: static; }
+}
