@@ -27,8 +27,13 @@ const dossierCaps = {
 };
 
 // Start from an empty output directory so a stale file can never be handed in.
-rmSync(outputDir, { recursive: true, force: true });
+// Clear the directory's CONTENTS without removing the directory itself: the
+// grader mounts an empty directory at /output, and removing a mount point
+// throws EBUSY ("Device or resource busy").
 mkdirSync(outputDir, { recursive: true });
+for (const child of readdirSync(outputDir)) {
+  rmSync(join(outputDir, child), { recursive: true, force: true });
+}
 
 // Hand in the app and its screenshots, whole.
 cpSync(join(repoRoot, 'app'), join(outputDir, 'app'), { recursive: true });
